@@ -1,13 +1,13 @@
 const p1ScoreDisplay = document.getElementById('p1Score');
 const p2ScoreDisplay = document.getElementById('p2Score');
-const wScoreDisplay = document.querySelector('p span');
+let wScoreDisplay = document.querySelector('p span');
 const inputScore = document.getElementById('inputScore');
 const p1Btn = document.getElementById('p1Btn');
 const p2Btn = document.getElementById('p2Btn');
 let resetBtn = document.getElementById('resetBtn');
 let p1Score = 0;
 let p2Score = 0;
-const winningScore = 5;
+let winningScore = 5;
 let gameOver = false;
 
 p1Btn.addEventListener("click", () => {
@@ -31,7 +31,15 @@ p2Btn.addEventListener("click", () => {
 
 })
 
-resetBtn.addEventListener("click", () => {
+inputScore.addEventListener("change", () => {
+
+    winningScore = Number(inputScore.value);
+    wScoreDisplay.textContent = inputScore.value;
+    inputScore.value = '';
+    reset()
+})
+
+function reset() {
     p1Score = 0;
     p2Score = 0;
     gameOver = false;
@@ -39,7 +47,10 @@ resetBtn.addEventListener("click", () => {
     p2ScoreDisplay.textContent = 0;
     p1Btn.removeAttribute("disabled");
     p2Btn.removeAttribute("disabled");
-})
+    winningScore = 0;
+}
+
+resetBtn.addEventListener("click", reset)
 
 function winner(oldScore, winningScore) {
     if (oldScore === winningScore) {
